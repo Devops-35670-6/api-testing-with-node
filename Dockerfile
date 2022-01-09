@@ -1,4 +1,4 @@
-FROM node:14.15.4 as base
+FROM node:14.15.4 as build
 
 WORKDIR /app
 
@@ -7,5 +7,9 @@ COPY package-lock.json package-lock.json
 
 RUN npm install
 
+FROM node:14.15.4-slim as base
+WORKDIR /app
+COPY --from=build /app/node_modules .
 COPY . .
 CMD ["npm", "start"]
+

@@ -1,13 +1,10 @@
 podTemplate(cloud: 'kubernetes',
         containers: [
                 containerTemplate(
-                        name:   'node14',
-                        image:  'node:14.15.4',
-                        command: 'cat',
-                        ttyEnabled: true,
-                        workingDir: env.WORKSPACE,
-                        runAsUser: '0',
-                        runAsGroup: '0'
+                        name: 'node14', image: 'node:14.15.4', ttyEnabled: true, workingDir: env.WORKSPACE
+                ),
+                containerTemplate(
+                        name: 'docker', image: 'trion/jenkins-docker-client', ttyEnabled: true, workingDir: env.WORKSPACE
                 )
         ]) {
     node(POD_LABEL){
@@ -23,7 +20,7 @@ podTemplate(cloud: 'kubernetes',
             echo "Workspace: " + env.WORKSPACE
         }
 
-        stage('Build'){
+        stage('NPM install'){
             container('node14') {
                 sh 'npm ci'
                 sh "chmod +x -R ${env.WORKSPACE}"
@@ -40,6 +37,12 @@ podTemplate(cloud: 'kubernetes',
                 } finally {
                     sh "./jenkins/scripts/kill.sh"
                 }
+            }
+        }
+
+        stage('Docker build'){
+            container('docker'){
+                    sh 'docker build -t test-api-testing .'
             }
         }
     }
