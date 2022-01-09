@@ -52,8 +52,12 @@ podTemplate(cloud: 'kubernetes',
 
         stage('Deploy to docker registry'){
             container('docker') {
-                withDockerRegistry([credentialsId: 'jenkins-cicd', url: 'https://nexus.veks.site/repository/docker-dev/']) {
-                    sh 'docker push nexus-docker-dev.veks.site/api-testing:latest'
+                withCredentials([usernamePassword(credentialsId: 'jenkins-cicd',
+                        passwordVariable: 'docker-password',
+                        usernameVariable: 'docker-user')]
+                ) {
+                    sh "docker login -u ${docker-user} -p ${docker-password} nexus-docker-dev.veks.site"
+                    sh "docker push nexus-docker-dev.veks.site/api-testing:latest"
                 }
             }
         }
