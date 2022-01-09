@@ -52,7 +52,7 @@ podTemplate(cloud: 'kubernetes',
 
         stage('Deploy to docker registry'){
             container('docker') {
-                withDockerRegistry([credentialsId: 'jenkins-cicd', url: 'nexus-docker-dev.veks.site']) {
+                withDockerRegistry([credentialsId: 'jenkins-cicd', url: 'https://nexus.veks.site/repository/docker-dev/']) {
                     sh 'docker push nexus-docker-dev.veks.site/api-testing:latest'
                 }
             }
