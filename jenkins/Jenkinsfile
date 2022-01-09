@@ -4,6 +4,7 @@ podTemplate(cloud: 'kubernetes',
         ]) {
     node(POD_LABEL){
         environment {
+
             CI = 'true'
         }
 
