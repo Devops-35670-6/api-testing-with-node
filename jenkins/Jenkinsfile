@@ -5,7 +5,7 @@ podTemplate(cloud: 'kubernetes',
                         image:  'node:14.15.4',
                         command: 'cat',
                         ttyEnabled: true,
-                        workingDir: '/home/jenkins/agent',
+                        workingDir: env.WORKSPACE,
                 )
         ]) {
     node(POD_LABEL){
@@ -17,6 +17,8 @@ podTemplate(cloud: 'kubernetes',
         stage('Checkout scm') {
             echo "Checking out scm..."
             checkout(scm)
+            echo "Current dir: ${PWD}"
+            echo "Workspace: " + env.WORKSPACE
         }
 
         stage('Build'){
