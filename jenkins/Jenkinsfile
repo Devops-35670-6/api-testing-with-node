@@ -1,0 +1,29 @@
+podTemplate(cloud: 'kubernetes',
+        containers: [
+                continerTemplate(name: 'node_14', image: 'node:14.15.4')
+        ]) {
+    node(POD_LABEL){
+        environment {
+            CI = 'true'
+        }
+
+        stage('Checkout scm') {
+            echo "Checking out scm..."
+            checkout(scm)
+        }
+
+        stage('Build'){
+            container('node_14')
+            sh 'npm ci'
+        }
+
+        stage('Test'){
+            try {
+                sh './jenkins/scripts/start.sh'
+                sh './jenkins/scripts/test.sh'
+            }finally{
+                sh './jenkins/scripts/kill.sh'
+            }
+        }
+    }
+}
