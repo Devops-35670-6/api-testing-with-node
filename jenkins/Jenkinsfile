@@ -30,10 +30,10 @@ podTemplate(cloud: 'kubernetes',
         stage('Test') {
             container('node14') {
                 try {
-                    sh './jenkins/scripts/start.sh'
-                    sh './jenkins/scripts/test.sh'
+                    sh "${env.WORKSPAC}/jenkins/scripts/start.sh"
+                    sh "${env.WORKSPAC}/jenkins/scripts/test.sh"
                 } finally {
-                    sh './jenkins/scripts/kill.sh'
+                    sh "${env.WORKSPAC}/jenkins/scripts/kill.sh"
                 }
             }
         }
