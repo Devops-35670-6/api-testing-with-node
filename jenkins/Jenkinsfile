@@ -20,8 +20,9 @@ podTemplate(cloud: 'kubernetes',
         }
 
         stage('Build'){
-            container('node14')
-            sh 'npm ci'
+            container('node14') {
+                sh 'npm ci'
+            }
         }
 
         stage('Test') {
