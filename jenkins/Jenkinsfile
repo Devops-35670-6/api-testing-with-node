@@ -34,7 +34,7 @@ podTemplate(cloud: 'kubernetes',
             container('node14') {
                 try {
 //                    sh "./jenkins/scripts/start.sh"
-                    sh "./jenkins/scripts/test.sh"
+                    sh "npm test"
                 }catch(e){
                     throw e
                 } finally {
