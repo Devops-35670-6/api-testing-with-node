@@ -6,6 +6,8 @@ podTemplate(cloud: 'kubernetes',
                         command: 'cat',
                         ttyEnabled: true,
                         workingDir: env.WORKSPACE,
+                        runAsUser: 0,
+                        runAsGroup: 0
                 )
         ]) {
     node(POD_LABEL){
