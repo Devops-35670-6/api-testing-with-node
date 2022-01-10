@@ -61,5 +61,10 @@ podTemplate(cloud: 'kubernetes',
                 }
             }
         }
+
+        stage('Trigger QA'){
+            build wait: false, job: 'api-testing-QA'
+        }
+
     }
 }
