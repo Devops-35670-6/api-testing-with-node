@@ -50,7 +50,7 @@ podTemplate(cloud: 'kubernetes',
             }
         }
 
-        stage('Deploy to docker registry'){
+        stage('Deploy to docker dev registry'){
             container('docker') {
                 withCredentials([usernamePassword(credentialsId: 'jenkins-cicd',
                         passwordVariable: 'docker_password',
