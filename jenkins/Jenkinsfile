@@ -21,6 +21,7 @@ podTemplate(cloud: 'kubernetes',
         stage('Checkout scm') {
             echo "Checking out scm..."
             checkout(scm)
+            sh "ls -l ${env.WORKSPACE} +'/jenkins/"
             utils = load env.WORKSPACE +'/jenkins/Utils.groovy'
             echo "Current dir: ${PWD}"
             echo "Workspace: " + env.WORKSPACE
