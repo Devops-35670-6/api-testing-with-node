@@ -12,7 +12,7 @@ podTemplate(cloud: 'kubernetes',
         ]
 ) {
     node(POD_LABEL){
-        def utils = load 'jenkins/Utils.groovy'
+        def utils = load env.WORKSPACE +'/jenkins/Utils.groovy'
         environment {
 
             CI = 'true'
