@@ -11,7 +11,7 @@ def checkAppFileChanged(exp){
     ).trim().split('\n').findAll{ it =~ exp}
 
     def CURRENT_COMMIT_ID = sh(
-            script: "git show-ref --hash ${CURRENT_BRANCH}",
+            script: "git show-ref --hash refs/remotes/origin/${CURRENT_BRANCH}",
             returnStdout: true
     ).trim()
     echo "size of GIT_FILES ${GIT_FILES.size}"
