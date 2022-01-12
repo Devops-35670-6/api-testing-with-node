@@ -5,7 +5,7 @@ def storeCurrentCommitId(){
             returnStdout: true
     ).trim()
     writeFile(file: 'current_commit', text: "${CURRENT_COMMIT}")
-    archiveArtifacts(artifacts: "${env.WORKSPACE}/current_commit_${currentBuild.currentBuild.number}")
+    archiveArtifacts(artifacts: "${env.WORKSPACE}/current_commit_${env.BUILD_NUMBER}")
     return CURRENT_COMMIT
 }
 def getPreviousBuildCommitId(){
