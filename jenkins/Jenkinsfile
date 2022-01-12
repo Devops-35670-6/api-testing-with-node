@@ -1,4 +1,3 @@
-def utils = load 'Utils.groovy'
 podTemplate(cloud: 'kubernetes',
         containers: [
                 containerTemplate(
@@ -13,6 +12,7 @@ podTemplate(cloud: 'kubernetes',
         ]
 ) {
     node(POD_LABEL){
+        def utils = load 'Utils.groovy'
         environment {
 
             CI = 'true'
