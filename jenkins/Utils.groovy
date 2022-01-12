@@ -20,9 +20,8 @@ def getPreviousBuildCommitId(){
             } else {
                 return null
             }
-        }catch(e){
+        }catch(e) {
             echo "${e}"
-        }finally{
             return null
         }
     }
