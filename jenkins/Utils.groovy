@@ -1,12 +1,12 @@
 #!groovy
 def checkAppFileChanged(exp){
-    def CURRENT_BRANCH = sh(
-            script: "git rev-parse --abbrev-ref HEAD",
+    def COMMIT_HASH = sh(
+            script: "git log --pretty=format:'%h' -n 1",
             returnStdout: true
     ).trim()
 
     def GIT_FILES = sh(
-            script: "git ls-tree --full-tree -r --name-only ${CURRENT_BRANCH}",
+            script: "git ls-tree --full-tree -r --name-only ${COMMIT_HASH}",
             returnStdout: true
     ).trim().split('\n').findAll{ it =~ exp}
 
