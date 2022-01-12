@@ -4,8 +4,8 @@ def storeCurrentCommitId(){
             script: 'git log --pretty=format:"%H" -n1',
             returnStdout: true
     ).trim()
-    writeFile(file: 'current_commit', text: "${CURRENT_COMMIT}")
-    archiveArtifacts(artifacts: "${env.WORKSPACE}/current_commit_${env.BUILD_NUMBER}")
+    writeFile(file: "current_commit_${env.BUILD_NUMBER}", text: "${CURRENT_COMMIT}")
+    archiveArtifacts(artifacts: "current_commit_${env.BUILD_NUMBER}")
     return CURRENT_COMMIT
 }
 def getPreviousBuildCommitId(){
@@ -13,9 +13,9 @@ def getPreviousBuildCommitId(){
         try {
             copyArtifacts(projectName: currentBuild.projectName,
                     selector: specific("${currentBuild.previousBuild.number}"))
-            def exists = fileExists("${env.WORKSPACE}/current_commit_${currentBuild.previousBuild.number}")
+            def exists = fileExists("current_commit_${currentBuild.previousBuild.number}")
             if (exists) {
-                def prev_commit = readFile("${env.WORKSPACE}/current_commit_${currentBuild.previousBuild.number}").trim()
+                def prev_commit = readFile("current_commit_${currentBuild.previousBuild.number}").trim()
                 return prev_commit
             } else {
                 return null
