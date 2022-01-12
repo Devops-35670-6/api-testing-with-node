@@ -21,12 +21,15 @@ podTemplate(cloud: 'kubernetes',
         stage('Checkout scm') {
             echo "Checking out scm..."
             checkout(scm)
-            sleep(60000)
             sh "ls -l ${env.WORKSPACE}/jenkins/"
+
             utils = load env.WORKSPACE +'/jenkins/Utils.groovy'
-            echo "Current dir: ${PWD}"
-            echo "Workspace: " + env.WORKSPACE
-            utils.checkAppFileChanged(~/\.js$/)
+            def PREV_COMMIT_ID = utils.getPreviousBuildCommitId()
+            echo "CommitId of prev build: ${PREV_COMMIT_ID}"
+
+            def CURRENT_COMMIT_ID = utils.storeCurrentCommitId()
+            echo "CommitId of current build: ${PREV_COMMIT_ID}"
+
             currentBuild.result = 'NOT_BUILT'
             return
         }

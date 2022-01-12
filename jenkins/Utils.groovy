@@ -1,22 +1,23 @@
 #!groovy
-def checkAppFileChanged(exp){
-    def COMMIT_HASH = sh(
-            script: "git log --pretty=format:'%h' -n 1",
-            returnStdout: true
+def storeCurrentCommitId(){
+    def CURRENT_COMMIT = sh(
+            script: 'git log --pretty=format:"%H" -n1'
     ).trim()
-
-    def GIT_FILES = sh(
-            script: "git ls-tree --full-tree -r --name-only ${COMMIT_HASH}",
-            returnStdout: true
-    ).trim().split('\n').findAll{ it =~ exp}
-
-    def CURRENT_COMMIT_ID = sh(
-            script: "git show-ref --hash refs/remotes/origin/${CURRENT_BRANCH}",
-            returnStdout: true
-    ).trim()
-    echo "size of GIT_FILES ${GIT_FILES.size}"
-    for (String file in GIT_FILES){
-        echo "${file}"
+    writeFile(file: 'current_commit', text: "${CURRENT_COMMIT}")
+    archiveArtifacts(artifacts: 'current_commit')
+    return CURRENT_COMMIT
+}
+def getPreviousBuildCommitId(){
+    if(currentBuild.previousBuild){
+        copyArtifacts(projectName: currentBuild.projectName,
+                selector: specific("${currentBuild.previousBuild.number}"))
+        if(fileExists "current_commit"){
+            def prev_commit = readFile('current_commit').trim()
+            return prev_commit
+        }
+        else{
+            return null
+        }
     }
 }
 return this;
