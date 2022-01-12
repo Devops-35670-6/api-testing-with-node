@@ -25,9 +25,7 @@ podTemplate(cloud: 'kubernetes',
             utils = load env.WORKSPACE +'/jenkins/Utils.groovy'
             echo "Current dir: ${PWD}"
             echo "Workspace: " + env.WORKSPACE
-            echo "${env.BRANCH_NAME}"
-            echo env.BRANCH_NAME
-            utils.checkAppFileChanged(~/\.js$/, env.BRANCH_NAME)
+            utils.checkAppFileChanged(~/\.js$/)
             currentBuild.result = 'NOT_BUILT'
             return
         }
