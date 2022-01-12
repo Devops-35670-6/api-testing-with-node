@@ -14,9 +14,9 @@ def checkAppFileChanged(exp){
             script: "git show-ref --hash ${CURRENT_BRANCH}",
             returnStdout: true
     ).trim()
-
+    echo "size of GIT_FILES ${GIT_FILES.size}"
     for (String file in GIT_FILES){
-        println file
+        echo "${file}"
     }
 }
 return this;
