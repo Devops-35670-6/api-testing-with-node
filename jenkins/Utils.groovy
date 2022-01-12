@@ -8,12 +8,12 @@ def checkAppFileChanged(exp){
     def GIT_FILES = sh(
             script: "git ls-tree --full-tree -r --name-only ${CURRENT_BRANCH}",
             returnStdout: true
-    ).thim().split('\n').findAll{ it =~ exp}
+    ).trim().split('\n').findAll{ it =~ exp}
 
     def CURRENT_COMMIT_ID = sh(
             script: "git show-ref --hash refs/remotes/origin/ + ${CURRENT_BRANCH}",
             returnStdout: true
-    ).thim()
+    ).trim()
 
     for (String file in GIT_FILES){
         println file
