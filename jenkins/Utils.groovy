@@ -1,7 +1,8 @@
 #!groovy
 def storeCurrentCommitId(){
     def CURRENT_COMMIT = sh(
-            script: 'git log --pretty=format:"%H" -n1'
+            script: 'git log --pretty=format:"%H" -n1',
+            returnStdout: true
     ).trim()
     writeFile(file: 'current_commit', text: "${CURRENT_COMMIT}")
     archiveArtifacts(artifacts: 'current_commit')

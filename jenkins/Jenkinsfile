@@ -28,7 +28,7 @@ podTemplate(cloud: 'kubernetes',
             echo "CommitId of prev build: ${PREV_COMMIT_ID}"
 
             def CURRENT_COMMIT_ID = utils.storeCurrentCommitId()
-            echo "CommitId of current build: ${PREV_COMMIT_ID}"
+            echo "CommitId of current build: ${CURRENT_COMMIT_ID}"
 
             currentBuild.result = 'NOT_BUILT'
             return
