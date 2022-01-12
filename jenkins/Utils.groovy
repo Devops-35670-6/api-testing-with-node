@@ -12,3 +12,4 @@ def checkAppFileChanged(GString exp){
         println file
     }
 }
+return this;
