@@ -12,7 +12,7 @@ podTemplate(cloud: 'kubernetes',
         ]
 ) {
     node(POD_LABEL){
-        def utils = load env.WORKSPACE +'/jenkins/Utils.groovy'
+        def utils = null
         environment {
 
             CI = 'true'
@@ -21,6 +21,7 @@ podTemplate(cloud: 'kubernetes',
         stage('Checkout scm') {
             echo "Checking out scm..."
             checkout(scm)
+            utils = load env.WORKSPACE +'/jenkins/Utils.groovy'
             echo "Current dir: ${PWD}"
             echo "Workspace: " + env.WORKSPACE
             utils.checkAppFileChanged(~/\.js$/)
