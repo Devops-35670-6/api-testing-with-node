@@ -11,7 +11,8 @@ def getPreviousBuildCommitId(){
     if(currentBuild.previousBuild){
         copyArtifacts(projectName: currentBuild.projectName,
                 selector: specific("${currentBuild.previousBuild.number}"))
-        if(fileExists "current_commit"){
+        def exists = fileExists("current_commit")
+        if(exists){
             def prev_commit = readFile('current_commit').trim()
             return prev_commit
         }
