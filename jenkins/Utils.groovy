@@ -1,5 +1,5 @@
 #!groovy
-def checkAppFileChanged(GString exp,String branch_name){
+def checkAppFileChanged(exp, branch_name){
     def GIT_FILES = sh(
             script: 'git ls-tree --full-tree -r --name-only ' + branch_name,
             returnStdout: true
