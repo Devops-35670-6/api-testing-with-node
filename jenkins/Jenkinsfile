@@ -22,14 +22,25 @@ podTemplate(cloud: 'kubernetes',
             echo "Checking out scm..."
             checkout(scm)
             sh "ls -l ${env.WORKSPACE}/jenkins/"
+        }
+        stage('Define env vars'){
+            environment {
+                PREVIOUS_BUILD_NUMBER = currentBuild.previousBuild.number
+                CURRENT_BUILD_NUBMER = env.BUILD_NUBMER
+            }
 
             utils = load env.WORKSPACE +'/jenkins/Utils.groovy'
             def PREV_COMMIT_ID = utils.getPreviousBuildCommitId()
-            echo "CommitId of prev build: ${PREV_COMMIT_ID}"
+            environment{ PREV_COMMIT_ID = PREV_COMMIT_ID}
+            echo 'CommitId of prev build ${PREVIOUS_BUILD_NUMBER}: ${PREV_COMMIT_ID}'
 
             def CURRENT_COMMIT_ID = utils.storeCurrentCommitId()
-            echo "CommitId of current build: ${CURRENT_COMMIT_ID}"
+            environment{ CURRENT_COMMIT_ID = CURRENT_COMMIT_ID}
+            echo 'CommitId of current build ${CURRENT_BUILD_NUBMER}: ${CURRENT_COMMIT_ID}'
 
+
+        }
+        stage('Stopping early…'){
             currentBuild.result = 'NOT_BUILT'
             error('Stopping early…')
         }
