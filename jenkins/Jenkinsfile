@@ -32,11 +32,11 @@ podTemplate(cloud: 'kubernetes',
             utils = load env.WORKSPACE +'/jenkins/Utils.groovy'
             def PREV_COMMIT_ID = utils.getPreviousBuildCommitId()
             environment{ PREV_COMMIT_ID = PREV_COMMIT_ID}
-            echo 'CommitId of prev build ${PREVIOUS_BUILD_NUMBER}: ${PREV_COMMIT_ID}'
+            echo "CommitId of prev build ${env.PREVIOUS_BUILD_NUMBER}: ${env.PREV_COMMIT_ID}"
 
             def CURRENT_COMMIT_ID = utils.storeCurrentCommitId()
             environment{ CURRENT_COMMIT_ID = CURRENT_COMMIT_ID}
-            echo 'CommitId of current build ${CURRENT_BUILD_NUBMER}: ${CURRENT_COMMIT_ID}'
+            echo "CommitId of current build ${env.CURRENT_BUILD_NUBMER}: ${env.CURRENT_COMMIT_ID}"
 
 
         }
