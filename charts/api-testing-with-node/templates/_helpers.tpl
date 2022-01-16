@@ -1,7 +1,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "api-testing.name" -}}
+{{- define "api-testing-with-node.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
@@ -10,7 +10,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "api-testing.fullname" -}}
+{{- define "api-testing-with-node.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -26,16 +26,16 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "api-testing.chart" -}}
+{{- define "api-testing-with-node.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "api-testing.labels" -}}
-helm.sh/chart: {{ include "api-testing.chart" . }}
-{{ include "api-testing.selectorLabels" . }}
+{{- define "api-testing-with-node.labels" -}}
+helm.sh/chart: {{ include "api-testing-with-node.chart" . }}
+{{ include "api-testing-with-node.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -45,17 +45,17 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Selector labels
 */}}
-{{- define "api-testing.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "api-testing.name" . }}
+{{- define "api-testing-with-node.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "api-testing-with-node.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "api-testing.serviceAccountName" -}}
+{{- define "api-testing-with-node.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "api-testing.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "api-testing-with-node.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
